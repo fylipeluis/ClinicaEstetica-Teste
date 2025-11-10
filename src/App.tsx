@@ -15,13 +15,12 @@ function App() {
     });
 
     faceMesh.setOptions({
-      maxNumFaces: 1, // detecta apenas 1 rosto
+      maxNumFaces: 1,
       refineLandmarks: true,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
     });
 
-    // Quando o modelo detectar o rosto
     faceMesh.onResults((results) => {
       const video = webcamRef.current?.video;
       const canvas = canvasRef.current;
@@ -30,17 +29,12 @@ function App() {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      // Define o tamanho do canvas igual ao do vídeo
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      // Limpa o canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Desenha o vídeo ao fundo
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Desenha os pontos do rosto detectado
       if (results.multiFaceLandmarks) {
         for (const landmarks of results.multiFaceLandmarks) {
           ctx.fillStyle = "#00ff88";
@@ -48,23 +42,20 @@ function App() {
             const x = point.x * canvas.width;
             const y = point.y * canvas.height;
             ctx.beginPath();
-            ctx.arc(x, y, 1.2, 0, 2 * Math.PI);
+            ctx.arc(x, y, 1.5, 0, 2 * Math.PI);
             ctx.fill();
           }
         }
       }
     });
 
-    if (
-      typeof webcamRef.current !== "undefined" &&
-      webcamRef.current !== null
-    ) {
-      const camera = new Camera(webcamRef.current.video!, {
+    if (webcamRef.current && webcamRef.current.video) {
+      const camera = new Camera(webcamRef.current.video, {
         onFrame: async () => {
           await faceMesh.send({ image: webcamRef.current!.video! });
         },
-        width: 640,
-        height: 480,
+        width: 400,
+        height: 300,
       });
       camera.start();
     }
@@ -79,26 +70,34 @@ function App() {
 
       <main className="main">
         <div className="espelho">
-          {/* Webcam oculta atrás do canvas */}
-          <Webcam
-            ref={webcamRef}
+          {/* Mantém o canvas no mesmo tamanho fixo */}
+          <div
             style={{
-              visibility: "hidden",
-              position: "absolute",
+              position: "relative",
+              width: "400px",
+              height: "300px",
             }}
-            mirrored
-          />
-
-          {/* Canvas onde será desenhado o rosto + pontos */}
-          <canvas
-            ref={canvasRef}
-            style={{
-              width: "100%",
-              maxWidth: "400px",
-              borderRadius: "12px",
-              boxShadow: "0 0 10px rgba(0,0,0,0.3)",
-            }}
-          />
+          >
+            <Webcam
+              ref={webcamRef}
+              mirrored
+              style={{
+                visibility: "hidden",
+                position: "absolute",
+                width: "400px",
+                height: "300px",
+              }}
+            />
+            <canvas
+              ref={canvasRef}
+              style={{
+                width: "400px",
+                height: "300px",
+                borderRadius: "12px",
+                boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+              }}
+            />
+          </div>
         </div>
       </main>
 
