@@ -12,12 +12,6 @@ function App() {
       <main className="main">
         <div className="espelho">
           <Webcam
-            style={{
-              width: "100%",
-              maxWidth: "400px",
-              borderRadius: "12px",
-              boxShadow: "0 0 10px rgba(0,0,0,0.3)",
-            }}
             mirrored={true}
           />
         </div>
