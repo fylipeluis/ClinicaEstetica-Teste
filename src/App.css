@@ -1,0 +1,75 @@
+/* Paleta: verde pastel e tons suaves */
+:root {
+  --cor-fundo: #eaf7f0;
+  --cor-destaque: #a8e6cf;
+  --cor-texto: #2e3d34;
+  --cor-caixa: #ffffff;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--cor-fundo);
+  font-family: "Arial", sans-serif;
+}
+
+.header {
+  background-color: var(--cor-destaque);
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.header p {
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.espelho {
+  background-color: var(--cor-caixa);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.footer {
+  background-color: var(--cor-destaque);
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9rem;
+}
